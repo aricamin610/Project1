@@ -1,4 +1,5 @@
 from socket import *
+import pickle
 
 serverName = 'localhost'
 serverPort = 12000
@@ -20,11 +21,14 @@ print (name.decode())
 q2 = input("Enter the type of DNS query 0. A, 1. AAAA, 2. CNAME, 3. NS):")
 clientSocket.sendto(q2.encode(), (serverName, serverPort))
 
-type, localserverAddress = clientSocket.recvfrom(2048)
-print (type.decode())
+thislist, localserverAddress = clientSocket.recvfrom(2048)
+print (thislist.decode())
+
 
 clientSocket.close()
 #---------------------Client Inital Table------(HAS TO BE EMPTY AT FIRST)------
 
 #----------------End of Inital Table-------------------------
+
+
 
