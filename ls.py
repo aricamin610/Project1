@@ -1,5 +1,6 @@
 from socket import *
 import time
+import pickle
 
 serverPort = 12000
 serverSocket = socket(AF_INET, SOCK_DGRAM)
@@ -25,36 +26,43 @@ def initial_LocalServer_Table():
     print(list6)
     print(list7)
 #----------------End of Inital Table-------------------------
-thislist = [1,"", "", "", "", ""]
+a = [1,"", "", "", "", ""]
 
 num=8
 
 while 1:#------while connection is established
     q1, clientAddress = serverSocket.recvfrom(2048)
     name = q1.decode()
-    thislist[1] = name
+    a[1] = name
+        
+#    if name == "www.csusm.edu":
+
+#    a[1] = "www.csusm.edu"
+
     serverSocket.sendto(name.encode(), clientAddress)
 
     q2, clientAddress = serverSocket.recvfrom(2048)
     type = q2.decode()
 
     if type == "0":
-      thislist[2] = "A"
+      a[2] = "A"
     
     if type == "1":
-      thislist[2] = "AAAA"
+      a[2] = "AAAA"
     
     if type == "2":
-      thislist[2] = "CNAME"
+      a[2] = "CNAME"
     
     if type == "3":
-      thislist[2] = "NS"
+      a[2] = "NS"
   
     num+=1
-    serverSocket.sendto(type.encode(), clientAddress)
+    MESSAGE = pickle.dumps(a)
+    serverSocket.sendto(MESSAGE.encode(),clientAddress)
+#    serverSocket.sendto(type.encode(), clientAddress)
     initial_LocalServer_Table()
+    print(a)
     
-    print(thislist)
     
 
 
